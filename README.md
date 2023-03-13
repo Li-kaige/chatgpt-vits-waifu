@@ -46,6 +46,6 @@ chatgpt-vits-waifu可以自动将日语对话翻译成中文。方便您使用vi
 鸣谢
 --
 
-*   [ChatWaifu](https://github.com/cjyaddone/ChatWaifu)：该项目为chatgpt-vits-waifu的基础，感谢cjyaddone大佬的贡献。
+*   [ChatWaifu](https://github.com/cjyaddone/ChatWaifu)：该项目以ChatWaifu为基础，感谢cjyaddone大佬的贡献。
 
 如果您有任何疑问或建议，请随时联系我。邮箱：`Likaige_email@163.com`
