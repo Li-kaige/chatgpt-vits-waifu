@@ -16,9 +16,7 @@ chatgpt-vits-waifu是一个使用chatgpt的API和vits语音合成，实现与AI�
 运行
 ----
 1.  在命令行中切换到该项目所在的根目录
-2.  输入以下命令即可运行程序：
-
-`python ChatWaifu.py`
+2.  输入以下命令即可运行程序：`python ChatWaifu.py`
 
 
 注意事项
@@ -30,16 +28,16 @@ chatgpt-vits-waifu是一个使用chatgpt的API和vits语音合成，实现与AI�
 功能介绍
 ----
 
-### 记忆功能
+### 1.记忆功能
 
 chatgpt-vits-waifu具有记忆功能，它可以在对话过程中实时记录对话，从而使对话更连贯、更自然。
 
-### 信息聚合功能
+### 2.信息聚合功能
 
 当聊天内容数量超出openai限制时，chatgpt-vits-waifu会自动总结前文。  
 它会根据前文对话信息，生成一段总结性的文本进行替换，从而减少tokens数量，增大对话容量。
 
-### 日语自动翻译功能
+### 3.日语自动翻译功能
 
 chatgpt-vits-waifu可以自动将日语对话翻译成中文。方便您使用vits日语模型。
 
