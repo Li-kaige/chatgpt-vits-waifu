@@ -46,6 +46,7 @@ class ChatBotV2:
         self.messages = []
         self.settings = {} # 用于保存人物设定
         self.model_id = model_id
+        self.limit = 3400 # 聊天记录的最大长度
 
         self.load_messages() # 加载聊天记录
         self.settings = self.messages[0] # 读取人物设定
@@ -78,7 +79,9 @@ class ChatBotV2:
         # self.messages = self.messages[1:]
         # last_words = self.messages.pop(-1)
 
-        self.messages.append({"role": "user", "content": "请帮我总结一下上述对话的内容，实现减少tokens的同时，保证对话的质量。在总结中不要加入这一句话。"})
+        history_messages = self.messages
+
+        self.messages.append({"role": "user", "content": "请帮我用日语总结一下上述对话的内容，实现减少tokens的同时，保证对话的质量。在总结中不要加入这一句话。"})
 
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -89,26 +92,30 @@ class ChatBotV2:
         result = response['choices'][0]['message']['content']
         print (f"前情提要: {result}")
 
+        # 新设定
+        new_settings = self.settings.copy()
+
+        new_settings['content'] = self.settings['content'] + result + '现在继续角色扮演。'
+
         self.messages = []
-        self.messages.append(self.settings)
-
-        if self.model_id == 0:
-            self.messages.append({"role": "user", "content": "下面我会给你故事的前提提要。"})
-            self.messages.append({"role": "assistant", "content": "我明白了，我是伊卡洛斯，一个女性天使。请您输入故事的前提提要。"})
-            self.messages.append({"role": "user", "content": result})
-            self.messages.append({"role": "assistant", "content": "好的，我已经记住了。让我们继续角色扮演吧。"})
-        elif self.model_id == 1:
-            self.messages.append({"role": "user", "content": "下面我会给你故事的前提提要。"})
-            self.messages.append({"role": "assistant", "content": "わかりました、私は女天使のイカロスです。 話の前提に入ってください。"})
-            self.messages.append({"role": "user", "content": result})
-            self.messages.append({"role": "assistant", "content": "わかりました、覚えました。 ロールプレイングに移りましょう。"})
-
-        # self.messages.append(last_words)
-
+        self.messages.append(new_settings)
+        self.messages.append(history_messages[-3])
+        self.messages.append(history_messages[-2])
+        pass
+        # if self.model_id == 0:
+        #     self.messages.append({"role": "user", "content": "下面我会给你故事的前提提要。"})
+        #     self.messages.append({"role": "assistant", "content": "好的，我明白了。我会按您的要求进行角色扮演。请您输入故事的前提提要。"})
+        #     self.messages.append({"role": "user", "content": result})
+        #     self.messages.append({"role": "assistant", "content": "好的，我已经记住了。让我们继续角色扮演吧。"})
+        # elif self.model_id == 1:
+        #     self.messages.append({"role": "user", "content": "下面我会给你故事的前提提要。"})
+        #     self.messages.append({"role": "assistant", "content": "なるほど、分かりました。ご要望に応じてロールプレイを行います。 話の前提に入ってください。"})
+        #     self.messages.append({"role": "user", "content": result})
+        #     self.messages.append({"role": "assistant", "content": "わかりました、覚えました。 ロールプレイングに移りましょう。"})
 
     def talk(self):
         while True:
-            if self.total_tokens > 4000:
+            if self.total_tokens > self.limit:
                 self.summarize_messages() # 总结之前的聊天记录
 
             response = openai.ChatCompletion.create(
@@ -133,8 +140,9 @@ class ChatBotV2:
                 self.save_messages() #保存聊天记录    
     
     def send_message(self,input_message):
-        if self.total_tokens > 4000:
+        if self.total_tokens > self.limit:
             self.summarize_messages() # 总结之前的聊天记录
+        # self.summarize_messages() 
 
         self.messages.append({"role": "user", "content": input_message})
 
@@ -147,7 +155,7 @@ class ChatBotV2:
         self.total_tokens = response['usage']['total_tokens']
         result = response['choices'][0]['message']['content']
         # 打印机器人的回答和total_tokens
-
+        print(f"Total tokens used: {self.total_tokens}")
 
         self.messages.append({"role": "assistant", "content": result})
         
