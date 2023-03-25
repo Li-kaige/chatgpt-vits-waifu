@@ -25,6 +25,7 @@ chatgpt-vits-waifu是一个使用chatgpt的API和vits语音合成，实现与AI�
 0.  为使用chatgpt api，您需要先进行科学上网（VPN）。
 1.  在第一次运行ChatWaifu.py之前，请确保您在ChatWaifu.py中填写了您的OpenAI Key、百度翻译平台API、模型地址等信息。
 2.  请将vits语音模型放置在./model目录下，并在ChatWaifu.py中填写您的模型地址和对应配置文件地址。
+3.  ./chat_recoed文件夹中保存了人物初始设定以及对话记录，请您根据需要更改人物设定（请备份您的初始人物设定，程序运行后会自动替换为对话记录）
 
 功能介绍
 ----
