@@ -5,7 +5,8 @@ chatgpt-vits-waifu
 ----
 
 chatgpt-vits-waifu是一个使用chatgpt的API和vits语音合成，实现与AI老婆的语音聊天的项目。  
-该项目在cjyaddone大佬的ChatWaifu项目的基础上进行了改进，主要增加了记忆功能和信息聚合功能，大大提升了对话的容量。  
+该项目在cjyaddone大佬的ChatWaifu项目的基础上进行了改进，主要增加了记忆功能和信息聚合功能，大大提升了对话的容量。 
+实现了与自定义虚拟角色的连续长对话聊天功能。  
 此外，项目还实现了日语对话中文本自动翻译的功能。
 
 环境安装
